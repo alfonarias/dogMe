@@ -31,10 +31,7 @@ registerLocaleData(es);
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-<<<<<<< HEAD
-=======
     { provide: LOCALE_ID, useValue: 'es-ES' }
->>>>>>> 5dd1bc9... calendario spanish
   ],
   bootstrap: [AppComponent],
 })
