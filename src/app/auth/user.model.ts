@@ -17,7 +17,7 @@ export class User {
     if (!this.token) {
       return 0;
     }
-    //return this.tokenExpirationDate.getTime() - new Date().getTime();
-     return 2000; // to test it's working
+    return this.tokenExpirationDate.getTime() - new Date().getTime();
+    // return 2000; // to test it's working
   }
 }
