@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CalendarioService } from '../calendario/calendario.service';
 
 @Component({
   selector: 'app-home',
@@ -6,13 +7,15 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  constructor() {}
+  constructor(private calService: CalendarioService) {}
 
   eventSource = [];
 
   calendar = {
     mode: 'month',
     currentDate: new Date(),
+    startingDayWeek: 1,
+    startingDayMonth: 1
   };
 
   onViewTitleChanged(title) {
@@ -49,5 +52,13 @@ export class HomePage {
     console.log(
       'range changed: startTime: ' + ev.startTime + ', endTime: ' + ev.endTime
     );
+  }
+
+  onButtonSelected() {
+    this.calService.addNewEvent().subscribe();
+  }
+
+  test() {
+    console.log('test')
   }
 }
