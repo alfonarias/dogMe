@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CalendarioService } from '../calendario/calendario.service';
+import { Evento } from '../calendario/evento.model';
 
 @Component({
   selector: 'app-home',
@@ -55,7 +56,9 @@ export class HomePage {
   }
 
   onButtonSelected() {
-    this.calService.addNewEvent().subscribe();
+    this.calService.addNewEvent().subscribe((elem)=>{
+      console.log(elem);
+    });
   }
 
   test() {

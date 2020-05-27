@@ -49,11 +49,15 @@ export class CalendarioService {
       }),
       switchMap(resData => {
         generatedId = resData.name;
+        console.log('generatedId ' + generatedId);
+        console.log(this.eventos);
         return this.eventos;
       }),
       take(1),
       tap(eventos => {
+        console.log(eventos);
         newEvent.id = generatedId;
+        console.log(newEvent);
         this._eventos.next(eventos.concat(newEvent));
       })
     );
