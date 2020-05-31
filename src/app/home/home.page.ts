@@ -1,22 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CalendarioService } from '../calendario/calendario.service';
 import { Evento } from '../calendario/evento.model';
+import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit, OnDestroy {
   constructor(private calService: CalendarioService) {}
 
   eventSource = [];
+  isLoading = false;
+
+  private eventSourceSub: Subscription;
 
   calendar = {
     mode: 'month',
     currentDate: new Date(),
     startingDayWeek: 1,
-    startingDayMonth: 1
+    startingDayMonth: 1,
   };
 
   onViewTitleChanged(title) {
@@ -56,12 +61,28 @@ export class HomePage {
   }
 
   onButtonSelected() {
-    this.calService.addNewEvent().subscribe((elem)=>{
+    this.calService.addNewEvent().subscribe(elem => {
       console.log(elem);
     });
   }
 
-  test() {
-    console.log('test')
+
+  ngOnInit() {
+    this.eventSourceSub = this.calService.eventos.subscribe(eventos => {
+      this.eventSource = eventos;
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.eventSourceSub) {
+      this.eventSourceSub.unsubscribe();
+    }
+  }
+
+  ionViewWillEnter() {
+    this.isLoading = true;
+    this.calService.fetchEventos().subscribe(() => {
+      this.isLoading = false;
+    });
   }
 }
