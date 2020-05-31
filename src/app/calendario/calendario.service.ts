@@ -26,10 +26,7 @@ export class CalendarioService {
 
   constructor(private authService: AuthService, private http: HttpClient) {}
 
-  addNewEvent() {
-    let start = new Date(); // TODO: eliminar esta linea. Genera random
-    let end = new Date();
-    end.setMinutes(end.getMinutes() + 60);
+  addNewEvent(title: string, allDay: boolean, startTime: Date, endTime: Date) {
     let generatedId: string;
     let newEvent: Evento;
     return this.authService.userId.pipe(
@@ -38,12 +35,11 @@ export class CalendarioService {
         if (!userId) {
           throw new Error('No user id found!');
         }
-        const randomTitle = Math.round(Math.random() * 100);
         newEvent = new Evento(
           Math.random().toString(),
-          'Titulo random - ' + randomTitle,
-          start,
-          end,
+          title,
+          startTime,
+          endTime,
           false,
           userId // TODO: add user id
         );

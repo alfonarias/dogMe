@@ -3,6 +3,8 @@ import { CalendarioService } from '../calendario/calendario.service';
 import { Evento } from '../calendario/evento.model';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ModalController, LoadingController, ActionSheetController } from '@ionic/angular';
+import { CrearEventoComponent } from '../calendario/crear-evento/crear-evento.component';
 
 @Component({
   selector: 'app-home',
@@ -10,10 +12,16 @@ import { map } from 'rxjs/operators';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit, OnDestroy {
-  constructor(private calService: CalendarioService) {}
+  constructor(
+    private calService: CalendarioService,
+    private modalCtrl: ModalController,
+    private loadingCtrl: LoadingController,
+    private actionSheetCtrl: ActionSheetController
+  ) {}
 
   eventSource = [];
   isLoading = false;
+  selectedDate: Date;
 
   private eventSourceSub: Subscription;
 
@@ -51,6 +59,7 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   onCurrentDateChanged(event: Date) {
+    this.selectedDate = event;
     console.log('current date change: ' + event);
   }
 
@@ -61,11 +70,12 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   onButtonSelected() {
-    this.calService.addNewEvent().subscribe(elem => {
-      console.log(elem);
-    });
+    this.calService
+      .addNewEvent('Baño', true, new Date(), new Date())
+      .subscribe(elem => {
+        console.log(elem);
+      });
   }
-
 
   ngOnInit() {
     this.eventSourceSub = this.calService.eventos.subscribe(eventos => {
@@ -84,5 +94,74 @@ export class HomePage implements OnInit, OnDestroy {
     this.calService.fetchEventos().subscribe(() => {
       this.isLoading = false;
     });
+  }
+
+  openEventoModal(mode: 'select' | 'random') {
+    this.modalCtrl
+      .create({
+        component: CrearEventoComponent,
+        componentProps: {
+          selectedDay: this.selectedDate,
+          selectedMode: mode,
+        },
+      })
+      .then(modalEl => {
+        modalEl.present();
+        return modalEl.onDidDismiss();
+      })
+      .then(resultData => {
+        if (resultData.role === 'confirm') {
+          this.loadingCtrl
+            .create({ message: 'Creando evento...' })
+            .then(loadingEl => {
+              loadingEl.present();
+              const data = resultData.data.eventoData;
+              this.calService
+                .addNewEvent(
+                  data.title,
+                  data.allDay,
+                  data.startTime,
+                  data.endTime
+                )
+                .subscribe(() => {
+                  loadingEl.dismiss();
+                });
+            });
+        }
+      });
+  }
+
+  onCreateEvent(event: Date) {
+    console.log(this.selectedDate);
+    this.selectedDate = event;
+    console.log(this.selectedDate);
+    this.actionSheetCtrl
+      .create({
+        header: 'Choose an Action',
+        buttons: [
+          {
+            text: 'Select Date',
+            handler: () => {
+              this.openEventoModal('select');
+            },
+          },
+          {
+            text: 'Random Date',
+            handler: () => {
+              this.openEventoModal('random');
+            },
+          },
+          {
+            text: 'Cancel',
+            role: 'cancel',
+          },
+        ],
+      })
+      .then(actionSheetEl => {
+        actionSheetEl.present();
+      });
+
+    // this.router.navigateByUrl('/place/tabs/discover');
+    // this.navCtrl.navigateBack('/places/tabs/discover'); // to display the back animation navigation
   }
 }

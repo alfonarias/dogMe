@@ -5,7 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
-import { NgCalendarModule  } from 'ionic2-calendar';
+import { NgCalendarModule } from 'ionic2-calendar';
+import { CrearEventoComponent } from '../calendario/crear-evento/crear-evento.component';
+
 
 @NgModule({
   imports: [
@@ -16,11 +18,11 @@ import { NgCalendarModule  } from 'ionic2-calendar';
     RouterModule.forChild([
       {
         path: '',
-        component: HomePage
-      }
-    ])
+        component: HomePage,
+      },
+    ]),
   ],
-  declarations: [HomePage],
-  entryComponents: [HomePage]
+  declarations: [HomePage, CrearEventoComponent],
+  entryComponents: [HomePage, CrearEventoComponent],
 })
 export class HomePageModule {}
