@@ -37,7 +37,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/dogs/tabs/graphs',
+    redirectTo: '/dogs/tabs/home',
     pathMatch: 'full',
   },
 ];

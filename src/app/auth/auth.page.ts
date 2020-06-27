@@ -39,7 +39,7 @@ export class AuthPage implements OnInit {
           resData => {
             this.isLoading = false;
             loadingEl.dismiss();
-            this.router.navigateByUrl('/home');
+            this.router.navigateByUrl('/dogs/home');
             console.log(resData);
           },
           errorRes => {
