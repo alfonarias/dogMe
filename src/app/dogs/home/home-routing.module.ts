@@ -11,6 +11,14 @@ const routes: Routes = [
   {
     path: 'dog-details',
     loadChildren: () => import('./dog-details/dog-details.module').then( m => m.DogDetailsPageModule)
+  },
+  {
+    path: 'create-dog',
+    loadChildren: () => import('./create-dog/create-dog.module').then( m => m.CreateDogPageModule)
+  },
+  {
+    path: 'create-event',
+    loadChildren: () => import('./create-event/create-event.module').then( m => m.CreateEventPageModule)
   }
 ];
 
