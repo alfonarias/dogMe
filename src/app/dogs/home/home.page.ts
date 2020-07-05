@@ -11,15 +11,17 @@ import { Subscription } from 'rxjs';
 export class HomePage implements OnInit {
   constructor(private dogsService: DogsService) {}
   dogs: Dog[];
+  selectedDog: Dog;
   private dogsSub: Subscription;
+  private selectedDogSub: Subscription;
 
   ngOnInit() {
+    this.dogsService.fetchDogs().subscribe(data => console.log(data));
     this.dogsSub = this.dogsService.dogs.subscribe(dogs => {
       this.dogs = dogs;
     });
-  }
-
-  onUpdateDogTest() {
-    this.dogsService.updateSelecteDogBool(this.dogs[0]);
+    this.selectedDogSub = this.dogsService.selectedDog.subscribe(
+      dog => (this.selectedDog = dog)
+    );
   }
 }

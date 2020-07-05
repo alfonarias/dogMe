@@ -40,6 +40,10 @@ const routes: Routes = [
     redirectTo: '/dogs/tabs/home',
     pathMatch: 'full',
   },
+  {
+    path: 'select-dog',
+    loadChildren: () => import('./select-dog/select-dog.module').then( m => m.SelectDogPageModule)
+  },
 ];
 
 @NgModule({
