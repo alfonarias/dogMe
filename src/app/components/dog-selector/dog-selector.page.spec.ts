@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { SelectDogPage } from './select-dog.page';
+import { DogSelectorPage } from './dog-selector.page';
 
-describe('SelectDogPage', () => {
-  let component: SelectDogPage;
-  let fixture: ComponentFixture<SelectDogPage>;
+describe('DogSelectorPage', () => {
+  let component: DogSelectorPage;
+  let fixture: ComponentFixture<DogSelectorPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SelectDogPage ],
+      declarations: [ DogSelectorPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SelectDogPage);
+    fixture = TestBed.createComponent(DogSelectorPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

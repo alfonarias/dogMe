@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { SelectDogPageRoutingModule } from './select-dog-routing.module';
+import { DogSelectorPageRoutingModule } from './dog-selector-routing.module';
 
-import { SelectDogPage } from './select-dog.page';
+import { DogSelectorPage } from './dog-selector.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    SelectDogPageRoutingModule
+    DogSelectorPageRoutingModule
   ],
-  declarations: [SelectDogPage]
+  declarations: [DogSelectorPage]
 })
-export class SelectDogPageModule {}
+export class DogSelectorPageModule {}

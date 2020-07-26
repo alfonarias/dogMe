@@ -5,7 +5,7 @@ export class Dog {
     public sex: string,
     public breed: string,
     public birthDate: Date,
-    public selected: boolean,
+    public lastTimeSelected: Date,
     public userId: string
   ) {}
 }

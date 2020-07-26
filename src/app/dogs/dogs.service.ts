@@ -10,7 +10,7 @@ interface DogsData {
   birthDate: string;
   breed: string;
   name: string;
-  selected: boolean;
+  lastTimeSelected: Date;
   sex: string;
   userId: string;
 }
@@ -24,7 +24,7 @@ export class DogsService {
     return this._dogs.asObservable();
   }
 
-  emptyDog = new Dog('', '', '', '', new Date(), true, ''); // TODO: Esto es workaround para evitar que no hay perros seleccionados
+  emptyDog = new Dog('', '', '', '', new Date(), new Date(), ''); // TODO: Esto es workaround para evitar que no hay perros seleccionados
 
   private _selectedDog = new BehaviorSubject<Dog>(this.emptyDog);
   get selectedDog() {
@@ -48,7 +48,7 @@ export class DogsService {
           sex,
           breed,
           birthDate,
-          true,
+          new Date(),
           userId
         );
         return this.http.post<{ name: string }>(
@@ -94,7 +94,7 @@ export class DogsService {
                 resData[key].sex,
                 resData[key].breed,
                 new Date(resData[key].birthDate),
-                resData[key].selected,
+                new Date(resData[key].lastTimeSelected),
                 resData[key].userId
               )
             );
@@ -104,62 +104,57 @@ export class DogsService {
       }),
       tap(dogs => {
         this._dogs.next(dogs);
+        this._selectedDog.next(this.maxBy(dogs, 'lastTimeSelected')); // TODO: Esto devuelve el primer perro, no el ultimo seleccionado
       })
     );
   }
 
-  // getSelectedDog() {
-  //   this.dogs.subscribe(dogs => {
-  //     // return dogs.filter(d => d.selected);
-  //     return dogs[0];  // TODO: Return el unico que sea true cuando la logica se escriba
-  //   });
-  // }
+  selectDifferentDog(dogId: string) {
+    let updatedDogs: Dog[];
+    return this.dogs.pipe(
+      take(1),
+      switchMap(dogs => {
+        if (!dogs || dogs.length <= 0) {
+          return this.fetchDogs();
+        } else {
+          return of(dogs);
+        }
+      }),
+      switchMap(dogs => {
+        const updatedDogIndex = dogs.findIndex(d => d.id === dogId);
+        updatedDogs = [...dogs];
+        const oldDog = updatedDogs[updatedDogIndex];
+        updatedDogs[updatedDogIndex] = new Dog(
+          oldDog.id,
+          oldDog.name,
+          oldDog.sex,
+          oldDog.breed,
+          oldDog.birthDate,
+          new Date(),
+          oldDog.userId
+        );
+        return this.http.put(
+          `${environment.fireBaseHTTP}dogs.json?orderBy="userId"&equalTo="${dogId}"`,
+          { ...updatedDogs[updatedDogIndex], id: null }
+        );
+      }),
+      tap(() => {
+        this._dogs.next(updatedDogs);
+        const updatedDogIndex = updatedDogs.findIndex(d => d.id === dogId);
+        this._selectedDog.next(updatedDogs[updatedDogIndex]);
+      })
+    );
+  }
 
-  // fetchDogs() {
-  //   this.getAllIndexesForString(['hola'], 'hola');
-  // }
+  // UTILS  TODO: Crear un file auxiliar para este tipo de funciones y add unit tests
 
-  // TODO: Esta funcion es para actualizar el perro seleccionado en la base de datos y que
-  // se elija ese al iniciar la aplicacion. Queda trabajo por hacer aqui para hacerlo consistente
-  // Este metodo no funciona bien del todo, falta discernir bien entre updatedAllDogsSelectedFalse, updatedDogs
+  maxBy(array: any[], column: string) {
+    return array.reduce((prev, current) =>
+      +prev[column] > +current[column] ? prev : current
+    );
+  }
 
-  // updateSelecteDogBool(selectedDog: Dog) {
-  //   let updatedDogs: Dog[];
-  //   return this.dogs.pipe(
-  //     take(1),
-  //     switchMap(dgs => {
-  //       if (!dgs || dgs.length < 0) {
-  //         throw new Error('No dog id found!'); // this.fetchDogs();
-  //       } else {
-  //         return of(dgs);
-  //       }
-  //     }),
-  //     switchMap(dgs => {
-  //       updatedDogs = [...dgs];
-  //       const updateSelectedDogIndex = dgs.findIndex(
-  //         d => d.id === selectedDog.id
-  //       );
-  //       const updatedAllDogsSelectedFalse = updatedDogs.map(
-  //         d =>
-  //           new Dog(d.id, d.name, d.sex, d.breed, d.birthDate, false, d.userId)
-  //       );
-
-  //       const oldDog = updatedAllDogsSelectedFalse[updateSelectedDogIndex];
-  //       oldDog.selected = true;
-  //       updatedAllDogsSelectedFalse[updateSelectedDogIndex] = oldDog;
-
-  //       return this.http.put(
-  //         `${environment.fireBaseHTTP}/dogs/${oldDog.id}.json`,
-  //         { ...updatedDogs[updateSelectedDogIndex], id: null }
-  //       );
-  //     }),
-  //     tap(() => {
-  //       this._dogs.next(updatedDogs);
-  //     })
-  //   );
-  // }
-
-  // getAllNonIndexesInArrayForString(arr: string[], val: string): number[] {
-  //   return arr.map((elm, idx) => (elm !== val ? idx : 0)).filter(Number);
-  // }
+  getAllNonIndexesInArrayForString(arr: string[], val: string): number[] {
+    return arr.map((elm, idx) => (elm !== val ? idx : 0)).filter(Number);
+  }
 }

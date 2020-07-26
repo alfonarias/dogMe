@@ -1,0 +1,30 @@
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="danger" (click)="closePopover()"
+          >Cancelar</ion-button
+        >
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-md="6" offset-md="3">
+        <ion-list>
+          <ion-item
+            *ngFor="let dog of dogs"
+            routerLink="./dogs/tabs/home"
+            detail
+            (click)="selectDog(dog.id)"
+          >
+            <ion-avatar slot="start">
+              <img
+                src="https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074_1280.jpg"
+              />
+            </ion-avatar>
+            <ion-label>{{dog.name}}</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -18,6 +18,10 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+  },
+  {
+    path: 'dog-selector',
+    loadChildren: () => import('./components/dog-selector/dog-selector.module').then( m => m.DogSelectorPageModule)
   }
 ];
 
