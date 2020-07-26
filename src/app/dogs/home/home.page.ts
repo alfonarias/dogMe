@@ -34,7 +34,7 @@ export class HomePage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.dogsService.fetchDogs().subscribe(data => console.log(data));
+    this.dogsService.fetchDogs().subscribe();
 
     console.log('on willEnter dogs', this.dogs);
     console.log('on willEnter selected', this.selectedDog);
@@ -45,6 +45,7 @@ export class HomePage implements OnInit {
       .create({ component: DogSelectorPage, showBackdrop: false })
       .then(popoverElm => {
         popoverElm.present();
+        // popoverElm.onDidDismiss();
       });
   }
 
