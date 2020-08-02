@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AuthService } from '../../auth/auth.service';
+import { AuthService } from './auth.service';
 import { HttpClient } from '@angular/common/http';
 import { Dog } from 'src/app/core/models/dogme.model';
 import { switchMap, take, tap, map, takeLast, filter } from 'rxjs/operators';
