@@ -20,11 +20,11 @@ export interface AuthResponseData {
 })
 export class AuthService implements OnDestroy {
   // private _userIsAuthenticated = false;
-  private _user = new BehaviorSubject<User>(null);
+  private user$ = new BehaviorSubject<User>(null);
   private activeLogoutTimer: any;
 
   get userIsAuthenticated() {
-    return this._user.asObservable().pipe(
+    return this.user$.asObservable().pipe(
       map(usr => {
         if (usr) {
           return !!usr.token; // !! convierte a boolean
@@ -36,7 +36,7 @@ export class AuthService implements OnDestroy {
   }
 
   get userId() {
-    return this._user.asObservable().pipe(
+    return this.user$.asObservable().pipe(
       map(user => {
         if (user) {
           return user.id;
@@ -68,7 +68,7 @@ export class AuthService implements OnDestroy {
   }
 
   logout() {
-    this._user.next(null);
+    this.user$.next(null);
     if (this.activeLogoutTimer) {
       clearTimeout(this.activeLogoutTimer);
     }
@@ -85,7 +85,7 @@ export class AuthService implements OnDestroy {
       userData.idToken,
       expirationTime
     );
-    this._user.next(user);
+    this.user$.next(user);
     this.autoLogOut(user.tokenDuration);
     this.storeAuthData(
       userData.localId,
@@ -137,7 +137,7 @@ export class AuthService implements OnDestroy {
       }),
       tap(user => {
         if (user) {
-          this._user.next(user);
+          this.user$.next(user);
           this.autoLogOut(user.tokenDuration);
         }
       }),

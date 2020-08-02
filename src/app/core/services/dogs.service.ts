@@ -20,16 +20,19 @@ interface DogsData {
   providedIn: 'root',
 })
 export class DogsService {
-  private _dogs = new BehaviorSubject<Dog[]>([]);
+  private dogs$ = new BehaviorSubject<Dog[]>([]);
   get dogs() {
-    return this._dogs.asObservable();
+    return this.dogs$.asObservable();
   }
 
-  emptyDog = new Dog('', '', '', '', new Date(), new Date(), ''); // TODO: Esto es workaround para evitar que no hay perros seleccionados
+  // TODO: Esto es workaround para evitar que no hay perros seleccionados
+  // Para hacerlo mejor, se tiene que evitar visualizar el nombre hasta que todo haya cargado
+  // Es decir, en dogs.page tener un boolean controlado por ngIf para esperar a que todo haya cargado
+  emptyDog = new Dog('', '', '', '', new Date(), new Date(), '');
 
-  private _selectedDog = new BehaviorSubject<Dog>(this.emptyDog);
+  private selectedDog$ = new BehaviorSubject<Dog>(this.emptyDog);
   get selectedDog() {
-    return this._selectedDog.asObservable();
+    return this.selectedDog$.asObservable();
   }
 
   constructor(
@@ -71,8 +74,8 @@ export class DogsService {
       take(1),
       tap(dgs => {
         newDog.id = generatedId;
-        this._dogs.next(dgs.concat(newDog));
-        this._selectedDog.next(newDog); // Muestro en la app el perro que acabo de aniadir.
+        this.dogs$.next(dgs.concat(newDog));
+        this.selectedDog$.next(newDog); // Muestro en la app el perro que acabo de aniadir.
       })
     );
   }
@@ -108,8 +111,8 @@ export class DogsService {
         return dogs;
       }),
       tap(dogs => {
-        this._dogs.next(dogs);
-        this._selectedDog.next(this.util.maxBy(dogs, 'lastTimeSelected')); // TODO: Esto devuelve el primer perro, no el ultimo seleccionado
+        this.dogs$.next(dogs);
+        this.selectedDog$.next(this.util.maxBy(dogs, 'lastTimeSelected'));
       })
     );
   }
@@ -147,9 +150,9 @@ export class DogsService {
         });
       }),
       tap(() => {
-        this._dogs.next(updatedDogs);
+        this.dogs$.next(updatedDogs);
         const updatedDogIndex = updatedDogs.findIndex(d => d.id === dogId);
-        this._selectedDog.next(updatedDogs[updatedDogIndex]);
+        this.selectedDog$.next(updatedDogs[updatedDogIndex]);
       })
     );
   }
