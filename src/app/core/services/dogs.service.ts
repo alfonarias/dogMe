@@ -5,6 +5,7 @@ import { Dog } from 'src/app/core/models/dogme.model';
 import { switchMap, take, tap, map, takeLast, filter } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject, of, ReplaySubject } from 'rxjs';
+import { UtilService } from './util.service';
 
 interface DogsData {
   birthDate: string;
@@ -31,7 +32,11 @@ export class DogsService {
     return this._selectedDog.asObservable();
   }
 
-  constructor(private authService: AuthService, private http: HttpClient) {}
+  constructor(
+    private authService: AuthService,
+    private http: HttpClient,
+    private util: UtilService
+  ) {}
 
   addDog(name: string, sex: string, breed: string, birthDate: Date) {
     let generatedId: string;
@@ -104,7 +109,7 @@ export class DogsService {
       }),
       tap(dogs => {
         this._dogs.next(dogs);
-        this._selectedDog.next(this.maxBy(dogs, 'lastTimeSelected')); // TODO: Esto devuelve el primer perro, no el ultimo seleccionado
+        this._selectedDog.next(this.util.maxBy(dogs, 'lastTimeSelected')); // TODO: Esto devuelve el primer perro, no el ultimo seleccionado
       })
     );
   }
@@ -144,17 +149,5 @@ export class DogsService {
         this._selectedDog.next(updatedDogs[updatedDogIndex]);
       })
     );
-  }
-
-  // UTILS  TODO: Crear un file auxiliar para este tipo de funciones y add unit tests
-
-  maxBy(array: any[], column: string) {
-    return array.reduce((prev, current) =>
-      +prev[column] > +current[column] ? prev : current
-    );
-  }
-
-  getAllNonIndexesInArrayForString(arr: string[], val: string): number[] {
-    return arr.map((elm, idx) => (elm !== val ? idx : 0)).filter(Number);
   }
 }

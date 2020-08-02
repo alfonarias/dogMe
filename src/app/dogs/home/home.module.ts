@@ -10,13 +10,7 @@ import { HomePage } from './home.page';
 import { DogSelectorPageModule } from 'src/app/components/dog-selector/dog-selector.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    HomePageRoutingModule,
-    DogSelectorPageModule,
-  ],
+  imports: [CommonModule, FormsModule, IonicModule, HomePageRoutingModule],
   declarations: [HomePage],
 })
 export class HomePageModule {}

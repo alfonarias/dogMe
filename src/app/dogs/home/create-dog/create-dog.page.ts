@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { DogsService } from '../../../core/services/dogs.service';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
+import { DogsService } from 'src/app/core/services/dogs.service';
 
 @Component({
   selector: 'app-create-dog',

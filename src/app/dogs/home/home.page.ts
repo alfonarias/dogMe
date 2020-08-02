@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DogsService } from '../../core/services/dogs.service';
+import { DogsService } from 'src/app/core/services/dogs.service';
 import { Dog } from '../../core/models/dogme.model';
 import { Subscription } from 'rxjs';
 import { PopoverController } from '@ionic/angular';
@@ -23,31 +23,31 @@ export class HomePage implements OnInit {
   // ngOnInit() {}
 
   ngOnInit() {
-    this.dogsSub = this.dogsService.dogs.subscribe(dogs => {
-      this.dogs = dogs;
-    });
-    this.selectedDogSub = this.dogsService.selectedDog.subscribe(
-      dog => (this.selectedDog = dog)
-    );
-    console.log('on init dogs', this.dogs);
-    console.log('on init selected', this.selectedDog);
+    // this.dogsSub = this.dogsService.dogs.subscribe(dogs => {
+    //   this.dogs = dogs;
+    // });
+    // this.selectedDogSub = this.dogsService.selectedDog.subscribe(
+    //   dog => (this.selectedDog = dog)
+    // );
+    // console.log('on init dogs', this.dogs);
+    // console.log('on init selected', this.selectedDog);
   }
 
-  ionViewWillEnter() {
-    this.dogsService.fetchDogs().subscribe();
+  // ionViewWillEnter() {
+  //   this.dogsService.fetchDogs().subscribe();
 
-    console.log('on willEnter dogs', this.dogs);
-    console.log('on willEnter selected', this.selectedDog);
-  }
+  //   console.log('on willEnter dogs', this.dogs);
+  //   console.log('on willEnter selected', this.selectedDog);
+  // }
 
-  createPopOverForDogSelector() {
-    this.popOverCtrl
-      .create({ component: DogSelectorPage, showBackdrop: false })
-      .then(popoverElm => {
-        popoverElm.present();
-        // popoverElm.onDidDismiss();
-      });
-  }
+  // createPopOverForDogSelector() {
+  //   this.popOverCtrl
+  //     .create({ component: DogSelectorPage, showBackdrop: false })
+  //     .then(popoverElm => {
+  //       popoverElm.present();
+  //       // popoverElm.onDidDismiss();
+  //     });
+  // }
 
   // showDog(){
   //   this.selectedDog.
