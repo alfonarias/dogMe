@@ -14,7 +14,7 @@
             *ngFor="let dog of dogs"
             routerLink="./dogs/tabs/home"
             detail
-            (click)="selectDog(dog.id)"
+            (click)="onSelectDog(dog.id)"
           >
             <ion-avatar slot="start">
               <img

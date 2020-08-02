@@ -115,10 +115,12 @@ export class DogsService {
   }
 
   selectDifferentDog(dogId: string) {
+    console.log(dogId);
     let updatedDogs: Dog[];
     return this.dogs.pipe(
       take(1),
       switchMap(dogs => {
+        console.log(dogs.length);
         if (!dogs || dogs.length <= 0) {
           return this.fetchDogs();
         } else {
@@ -138,10 +140,11 @@ export class DogsService {
           new Date(),
           oldDog.userId
         );
-        return this.http.put(
-          `${environment.fireBaseHTTP}dogs.json?orderBy="userId"&equalTo="${dogId}"`,
-          { ...updatedDogs[updatedDogIndex], id: null }
-        );
+        console.log(updatedDogs);
+        return this.http.put(`${environment.fireBaseHTTP}dogs/${dogId}.json`, {
+          ...updatedDogs[updatedDogIndex],
+          id: null,
+        });
       }),
       tap(() => {
         this._dogs.next(updatedDogs);

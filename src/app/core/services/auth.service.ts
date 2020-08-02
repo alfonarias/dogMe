@@ -27,11 +27,11 @@ export class AuthService implements OnDestroy {
     return this._user.asObservable().pipe(
       map(usr => {
         if (usr) {
-          return !!usr.token;
+          return !!usr.token; // !! convierte a boolean
         } else {
           return false;
         }
-      }) // !! convierte a boolean
+      })
     );
   }
 
