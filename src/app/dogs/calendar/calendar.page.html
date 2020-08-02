@@ -1,1 +1,28 @@
-<ion-content> </ion-content>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button color="primary" (click)="onButtonSelected()"
+          >Baño</ion-button
+        >
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <calendar
+          [eventSource]="eventSource"
+          [calendarMode]="calendar.mode"
+          [currentDate]="calendar.currentDate"
+          [startingDayWeek]="calendar.startingDayWeek"
+          [startingDayMonth]="calendar.startingDayMonth"
+          (onCurrentDateChanged)="onCreateEvent($event)"
+          (onEventSelected)="onEventSelected($event)"
+          (onTitleChanged)="onViewTitleChanged($event)"
+          (onTimeSelected)="onTimeSelected($event)"
+          step="30"
+        >
+        </calendar>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
