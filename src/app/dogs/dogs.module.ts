@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { DogsPageRoutingModule } from './dogs-routing.module';
 
 import { DogsPage } from './dogs.page';
+import { DogSelectorPageModule } from '../components/dog-selector/dog-selector.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    DogsPageRoutingModule
+    DogsPageRoutingModule,
+    DogSelectorPageModule,
   ],
-  declarations: [DogsPage]
+  declarations: [DogsPage],
 })
 export class DogsPageModule {}

@@ -16,9 +16,12 @@ const routes: Routes = [
       import('./auth/auth.module').then(m => m.AuthPageModule),
   },
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-  }
+    path: 'dog-selector',
+    loadChildren: () =>
+      import('./components/dog-selector/dog-selector.module').then(
+        m => m.DogSelectorPageModule
+      ),
+  },
 ];
 
 @NgModule({
