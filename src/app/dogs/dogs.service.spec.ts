@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DogsService } from './dogs.service';
+import { DogsService } from '../core/services/dogs.service';
 
 describe('DogsService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../../auth/auth.service';
 import { HttpClient } from '@angular/common/http';
-import { Dog } from './dogs.model';
+import { Dog } from 'src/app/core/models/dogme.model';
 import { switchMap, take, tap, map, takeLast, filter } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject, of, ReplaySubject } from 'rxjs';

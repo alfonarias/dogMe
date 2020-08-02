@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DogsService } from '../dogs.service';
-import { Dog } from '../dogs.model';
+import { DogsService } from '../../core/services/dogs.service';
+import { Dog } from '../../core/models/dogme.model';
 import { Subscription } from 'rxjs';
 import { PopoverController } from '@ionic/angular';
 import { DogSelectorPage } from 'src/app/components/dog-selector/dog-selector.page';

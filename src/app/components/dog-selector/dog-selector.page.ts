@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
-import { DogsService } from 'src/app/dogs/dogs.service';
-import { Dog } from 'src/app/dogs/dogs.model';
+import { DogsService } from 'src/app/core/services/dogs.service';
+import { Dog } from 'src/app/core/models/dogme.model';
 
 @Component({
   selector: 'app-dog-selector',
