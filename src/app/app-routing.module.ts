@@ -7,19 +7,19 @@ const routes: Routes = [
   {
     path: 'dogs',
     loadChildren: () =>
-      import('./dogs/dogs.module').then(m => m.DogsPageModule),
+      import('./dogs/dogs.module').then((m) => m.DogsPageModule),
     canLoad: [AuthGuard],
   },
   {
     path: 'auth',
     loadChildren: () =>
-      import('./auth/auth.module').then(m => m.AuthPageModule),
+      import('./auth/auth.module').then((m) => m.AuthPageModule),
   },
   {
     path: 'dog-selector',
     loadChildren: () =>
       import('./components/dog-selector/dog-selector.module').then(
-        m => m.DogSelectorPageModule
+        (m) => m.DogSelectorPageModule
       ),
   },
 ];
