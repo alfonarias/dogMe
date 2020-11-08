@@ -23,11 +23,11 @@ export class DogsPage implements OnInit {
   private selectedDogSub: Subscription;
 
   ngOnInit() {
-    this.dogsSub = this.dogsService.dogs.subscribe((dogs) => {
+    this.dogsSub = this.dogsService.dogs.subscribe(dogs => {
       this.dogs = dogs;
     });
     this.selectedDogSub = this.dogsService.selectedDog.subscribe(
-      (dog) => (this.selectedDog = dog)
+      dog => (this.selectedDog = dog)
     );
   }
 
@@ -38,7 +38,7 @@ export class DogsPage implements OnInit {
   createPopOverForDogSelector() {
     this.popOverCtrl
       .create({ component: DogSelectorPage, showBackdrop: false })
-      .then((popoverElm) => {
+      .then(popoverElm => {
         popoverElm.present();
       });
   }
