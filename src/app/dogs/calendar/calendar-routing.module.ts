@@ -6,8 +6,15 @@ import { CalendarPage } from './calendar.page';
 const routes: Routes = [
   {
     path: '',
-    component: CalendarPage
-  }
+    component: CalendarPage,
+  },
+  {
+    path: 'create-event',
+    loadChildren: () =>
+      import('./create-event/create-event.module').then(
+        m => m.CreateEventPageModule
+      ),
+  },
 ];
 
 @NgModule({

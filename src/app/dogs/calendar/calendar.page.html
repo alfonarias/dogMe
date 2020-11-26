@@ -1,1 +1,65 @@
-<ion-content> </ion-content>
+<ion-content>
+  <section>
+    <ion-button color="primary" routerLink="/dogs/tabs/calendar/create-event"
+      >Añadir evento</ion-button
+    >
+  </section>
+
+  <!--<ion-row>
+    Cambio de modo de visualizacion del calendario
+    <ion-col size="4">
+      <ion-button
+        expand="block"
+        [color]="calendar.mode == 'month' ? 'primary' : 'secondary'"
+        (click)="changeMode('month')"
+        >Mes</ion-button
+      >
+    </ion-col>
+    <ion-col size="4">
+      <ion-button
+        expand="block"
+        [color]="calendar.mode == 'week' ? 'primary' : 'secondary'"
+        (click)="changeMode('week')"
+        >Semana</ion-button
+      >
+    </ion-col>
+    <ion-col size="4">
+      <ion-button
+        expand="block"
+        [color]="calendar.mode == 'day' ? 'primary' : 'secondary'"
+        (click)="changeMode('day')"
+        >Dia</ion-button
+      >
+    </ion-col>-->
+
+  <!--Flecha hacia atras
+    <ion-col size="6" text-left>
+      <ion-button fill="clear" (click)="back()">
+        <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-col>
+
+    Flecha hacia adelante
+    <ion-col size="6" text-right>
+      <ion-button fill="clear" (click)="next()">
+        <ion-icon name="arrow-forward" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>-->
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <calendar
+          [eventSource]="eventSource"
+          [calendarMode]="calendar.mode"
+          [startingDayMonth]="calendar.startingDayMonth"
+          [startingDayWeek]="calendar.startingDayWeek"
+          [currentDate]="calendar.currentDate"
+          step="30"
+          class="calendar"
+        >
+        </calendar>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

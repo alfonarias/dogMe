@@ -21,7 +21,7 @@ export class CreateVacPage implements OnInit {
   vacs: Vaccine[];
 
   ngOnInit() {
-    this.vacService.fetchVacs().subscribe((vacs) => {
+    this.vacService.fetchVacs().subscribe(vacs => {
       this.vacs = vacs;
       console.log(vacs);
     });
@@ -46,7 +46,7 @@ export class CreateVacPage implements OnInit {
       .create({
         message: 'Añadiendo vacuna..',
       })
-      .then((loadingEl) => {
+      .then(loadingEl => {
         loadingEl.present();
         this.vacService
           .addVac(
