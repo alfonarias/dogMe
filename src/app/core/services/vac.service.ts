@@ -34,7 +34,6 @@ export class VacService {
   }
 
   constructor(
-    //private authService: AuthService,
     private dogService: DogsService,
     private http: HttpClient,
     private util: UtilService
@@ -45,9 +44,9 @@ export class VacService {
     let newVac: Vaccine;
     return this.dogService.selectedDog.pipe(
       take(1),
-      switchMap((dog) => {
+      switchMap(dog => {
         if (!dog) {
-          throw new Error('No user id found!');
+          throw new Error('No dog id found!');
         }
         newVac = new Vaccine(Math.random.toString(), name, lastTime, dog.id);
         return this.http.post<{ name: string }>(
@@ -58,14 +57,14 @@ export class VacService {
           }
         );
       }),
-      switchMap((resData) => {
+      switchMap(resData => {
         generatedId = resData.name;
         return this.vac;
       }),
       take(1),
-      tap((dgs) => {
+      tap(vcs => {
         newVac.id = generatedId;
-        this.vac$.next(dgs.concat(newVac));
+        this.vac$.next(vcs.concat(newVac));
         this.selectedVac$.next(newVac); // Muestro en la app la vacuna que acabo de aniadir.
       })
     );
@@ -74,7 +73,7 @@ export class VacService {
   fetchVacs() {
     return this.dogService.dogId.pipe(
       take(1),
-      switchMap((dogId) => {
+      switchMap(dogId => {
         if (!dogId) {
           throw new Error('Dog id not found');
         }
@@ -82,7 +81,7 @@ export class VacService {
           `${environment.fireBaseHTTP}vaccine.json?orderBy="dogId"&equalTo="${dogId}"`
         );
       }),
-      map((resData) => {
+      map(resData => {
         const vacs = [];
         for (const key in resData) {
           if (resData.hasOwnProperty(key)) {
@@ -98,7 +97,7 @@ export class VacService {
         }
         return vacs;
       }),
-      tap((vacs) => {
+      tap(vacs => {
         this.vac$.next(vacs);
         this.selectedVac$.next(this.util.maxBy(vacs, 'lastTime'));
       })

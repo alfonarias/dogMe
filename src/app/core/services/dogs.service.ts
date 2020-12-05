@@ -37,7 +37,7 @@ export class DogsService {
 
   get dogId() {
     return this.selectedDog$.asObservable().pipe(
-      map((dog) => {
+      map(dog => {
         if (dog) {
           return dog.id;
         } else {
