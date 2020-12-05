@@ -35,6 +35,18 @@ export class DogsService {
     return this.selectedDog$.asObservable();
   }
 
+  get dogId() {
+    return this.selectedDog$.asObservable().pipe(
+      map(dog => {
+        if (dog) {
+          return dog.id;
+        } else {
+          return null;
+        }
+      })
+    );
+  }
+
   constructor(
     private authService: AuthService,
     private http: HttpClient,
