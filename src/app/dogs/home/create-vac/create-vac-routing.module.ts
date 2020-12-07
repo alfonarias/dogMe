@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: CreateVacPage
+  },
+  {
+    path: 'edit-vac',
+    loadChildren: () => import('./edit-vac/edit-vac.module').then( m => m.EditVacPageModule)
   }
 ];
 
