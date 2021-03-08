@@ -1,0 +1,51 @@
+::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  display: none;
+}
+
+// .segment-button {
+//   ion-label {
+//     color: var(--ion-color-light-tint);
+//   }
+// } cambiar color label
+
+// .segment-button-checked {
+//   ion-label {
+//     color: var(--ion-color-light-shade) !important;
+//   }
+//   --ion-item-background-activated: #red;
+// }
+
+// ion-segment-button {
+//   --background: #f8f7f7;
+//   --background-checked: #9497af;
+//   --border-radius: 15px;
+// }
+
+.segment-button-day {
+  --background: #f8f7f7;
+  --background-checked: #9497af;
+  --border-radius: 15px;
+  --indicator-color: 0;
+  --color: #292c44;
+  --color-checked: #ffffff;
+  //--padding-start: 15px;
+  --padding-end: -15px;
+  //   --border-style: -20;
+  --padding-start: -15px;
+  //--color: #e8e8ec;
+  //   --indicator-color-checked: transparent !important;
+  //   --indicator-background: 0 !important;
+  //   --indicator-box-shadow: transparent !important;
+}
+
+//TODO: Al seleccionar se queda rectarngular
+.segment-button-month {
+  --indicator-box-shadow: none;
+  --indicator-color: 0;
+  //   //: transparent !important; es otra manera de hacerlo
+  //   --indicator-color-checked: transparent !important;
+  --color: #e8e8ec;
+  --color-checked: #292c44;
+  --border-radius: 15px;
+}
